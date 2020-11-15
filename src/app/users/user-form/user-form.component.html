@@ -1,0 +1,188 @@
+<div class="card mt-5">
+  <div class="card-header">
+    <div class="float-left">
+      <h4>Cadastro de usuário</h4>
+    </div>
+  </div>
+  <div class="m-4">
+    <form class="needs-validation" novalidate [formGroup]="userForm">
+      <div class="form-row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="firstName">Nome</label>
+            <input
+              maxlength="50"
+              type="text"
+              class="form-control"
+              id="firstName"
+              placeholder=""
+              formControlName="firstName"
+              [ngClass]="{ 'is-invalid': submitted && hasError('firstName') }"
+            />
+            <!-- Validações -->
+            <div
+              class="invalid-feedback"
+              *ngIf="hasError('firstName') && hasError('firstName')['required']"
+            >
+              Por favor, informe um nome para o usuário!
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                hasError('firstName') && hasError('firstName')['minlength']
+              "
+            >
+              Nome precisa ter no mínimo
+              {{ hasError('firstName')['minlength'].requiredLength }}
+              caracteres!
+            </div>
+            <!-- Final Validações -->
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="lastName">Sobrenome</label>
+            <input
+              maxlength="50"
+              type="text"
+              class="form-control"
+              id="lastName"
+              placeholder=""
+              formControlName="lastName"
+              [ngClass]="{ 'is-invalid': submitted && hasError('lastName') }"
+            />
+            <!-- Validações -->
+            <div
+              class="invalid-feedback"
+              *ngIf="hasError('lastName') && hasError('lastName')['required']"
+            >
+              Por favor, informe um sobrenome para o usuário!
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="hasError('lastName') && hasError('lastName')['minlength']"
+            >
+              Sobrenome precisa ter no mínimo
+              {{ hasError('lastName')['minlength'].requiredLength }}
+              caracteres!
+            </div>
+            <!-- Final Validações -->
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              maxlength="50"
+              type="email"
+              class="form-control"
+              id="email"
+              placeholder="example@domain.com"
+              formControlName="email"
+              [ngClass]="{ 'is-invalid': submitted && hasError('email') }"
+            />
+            <!-- Validações -->
+            <div
+              class="invalid-feedback"
+              *ngIf="hasError('email') && hasError('email')['required']"
+            >
+              Por favor, informe um email para o usuário!
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="hasError('email') && hasError('email')['minlength']"
+            >
+              Email precisa ter no mínimo
+              {{ hasError('email')['minlength'].requiredLength }}
+              caracteres!
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="hasError('email') && hasError('email').email"
+            >
+              Email inválido!
+            </div>
+            <!-- Final Validações -->
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="firstName">Data de nascimento</label>
+            <input
+              type="date"
+              class="form-control"
+              id="dateOfBirth"
+              formControlName="dateOfBirth"
+              [ngClass]="{
+                'is-invalid': submitted && hasError('dateOfBirth')
+              }"
+              max="{{ today | date: 'yyyy-MM-dd' }}"
+            />
+            <!-- Validações -->
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                hasError('dateOfBirth') && hasError('dateOfBirth')['required']
+              "
+            >
+              Por favor, informe uma data de nascimento para o usuário!
+            </div>
+            <div
+              class="invalid-feedback"
+              *ngIf="
+                hasError('dateOfBirth') &&
+                hasError('dateOfBirth')['invalidDate']
+              "
+            >
+              Por favor, informe uma data de nascimento menor ou igual a data de
+              hoje!
+            </div>
+
+            <!-- Final Validações -->
+          </div>
+        </div>
+
+        <div class="col-sm-8">
+          <div class="form-group">
+            <label for="schooling">Escolaridade</label>
+            <select
+              class="form-control"
+              id="schooling"
+              formControlName="schooling"
+              [ngClass]="{ 'is-invalid': submitted && hasError('schooling') }"
+            >
+              <option value="" selected="selected">Selecione</option>
+              <option
+                *ngFor="let schooling of schoolings"
+                value="{{ schooling.id }}"
+              >
+                {{ schooling.description }}
+              </option>
+            </select>
+            <!-- Validações -->
+            <div
+              class="invalid-feedback"
+              *ngIf="hasError('schooling') && hasError('schooling')['required']"
+            >
+              Por favor, informe uma escolaridade para o usuário!
+            </div>
+            <!-- Final Validações -->
+          </div>
+        </div>
+      </div>
+
+      <div class="float-right mt-3">
+        <button type="submit" class="btn btn-primary" (click)="onSubmit()">
+          Salvar
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary ml-1"
+          (click)="onCancel()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
