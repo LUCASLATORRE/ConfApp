@@ -1,4 +1,4 @@
-# Confitec - Controle de usuários v1.0
+# Conf - Controle de usuários v1.0
 
 Execute npm install para instalar os pacote necessários para a execução do projeto.
 
