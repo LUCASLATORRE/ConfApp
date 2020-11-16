@@ -16,65 +16,62 @@
     </div>
   </div>
   <div class="card-body">
-    <table
-      *ngIf="usersFiltered$ | async as users; else loading"
-      class="table table-hover table-striped"
-    >
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Nome</th>
-          <th>Sobrenome</th>
-          <th>E-mail</th>
-          <th>Data de nascimento</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
+    <div *ngIf="usersFiltered$ | async as users; else loading">
+      <table class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>E-mail</th>
+            <th>Data de nascimento</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr
-          *ngFor="
-            let user of users | paginate: { itemsPerPage: 10, currentPage: p }
-          "
+        <tbody>
+          <tr
+            *ngFor="
+              let user of users | paginate: { itemsPerPage: 10, currentPage: p }
+            "
+          >
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+            <td>
+              <span
+                class="fas fa-edit text-primary action-icon"
+                aria-hidden="true"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Atualizar"
+                (click)="onEdit(user.id)"
+              ></span
+              >&nbsp;
+              <span
+                class="fas fa-trash-alt text-danger action-icon"
+                aria-hidden="true"
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Excluir"
+                (click)="onDelete(user)"
+              ></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="float-right">
+        <pagination-controls
+          class="my-pagination"
+          (pageChange)="p = $event"
+          previousLabel=""
+          nextLabel=""
         >
-          <td>{{ user.id }}</td>
-          <td>{{ user.firstName }}</td>
-          <td>{{ user.lastName }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
-          <td>
-            <span
-              class="fas fa-edit text-primary action-icon"
-              aria-hidden="true"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Atualizar"
-              (click)="onEdit(user.id)"
-            ></span
-            >&nbsp;
-            <span
-              class="fas fa-trash-alt text-danger action-icon"
-              aria-hidden="true"
-              data-toggle="tooltip"
-              data-placement="top"
-              title="Excluir"
-              (click)="onDelete(user)"
-            ></span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="float-right">
-      <pagination-controls
-        class="my-pagination"
-        (pageChange)="p = $event"
-        previousLabel=""
-        nextLabel=""
-      >
-      </pagination-controls>
+        </pagination-controls>
+      </div>
     </div>
-
     <ng-template #loading>
       <div class="d-flex justify-content-center text-primary">
         <div class="spinner-border" role="status">
