@@ -14,11 +14,9 @@ import { UsersModule } from './users/users.module';
   imports: [
     UsersModule,
     ModalModule.forRoot(),
-
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ModalModule.forRoot(),
     SharedModule,
     NgxPaginationModule,
   ],

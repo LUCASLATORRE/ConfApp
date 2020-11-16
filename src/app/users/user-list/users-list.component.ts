@@ -1,15 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, EMPTY, Observable, throwError } from 'rxjs';
-import {
-  catchError,
-  map,
-  pluck,
-  startWith,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { EMPTY, Observable, throwError } from 'rxjs';
+import { catchError, pluck, switchMap, take } from 'rxjs/operators';
 
 import { AlertModalService } from '../../shared/alert-modal.service';
 import { User } from '../user.model';
@@ -22,10 +15,7 @@ import { UsersService } from '../users.service';
 })
 export class UsersListComponent implements OnInit {
   users$: Observable<User[]>;
-  usersFiltered$: Observable<User[]>;
-
-  filter: FormControl;
-  filter$: Observable<string>;
+  filter: string;
 
   currentPage: number;
   itemsPerPage = 10;
@@ -37,7 +27,6 @@ export class UsersListComponent implements OnInit {
     private route: ActivatedRoute,
     private alertService: AlertModalService
   ) {
-    this.filter = new FormControl('');
     this.onRefresh();
   }
 
@@ -50,16 +39,6 @@ export class UsersListComponent implements OnInit {
         console.error(err);
         return throwError(this.handleError(err, caught));
       })
-    );
-    this.filter$ = this.filter.valueChanges.pipe(startWith(''));
-    this.usersFiltered$ = combineLatest([this.users$, this.filter$]).pipe(
-      map(([users, filterString]) =>
-        users.filter(
-          user =>
-            user.firstName.toLowerCase().indexOf(filterString.toLowerCase()) !==
-            -1
-        )
-      )
     );
   }
 
