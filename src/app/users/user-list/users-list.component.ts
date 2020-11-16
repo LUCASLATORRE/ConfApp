@@ -39,16 +39,6 @@ export class UsersListComponent implements OnInit {
   ) {
     this.filter = new FormControl('');
     this.onRefresh();
-    // this.filter$ = this.filter.valueChanges.pipe(startWith(''));
-    // this.usersFiltered$ = combineLatest([this.users$, this.filter$]).pipe(
-    //   map(([users, filterString]) =>
-    //     users.filter(
-    //       user =>
-    //         user.firstName.toLowerCase().indexOf(filterString.toLowerCase()) !==
-    //         -1
-    //     )
-    //   )
-    // );
   }
 
   ngOnInit() {}
