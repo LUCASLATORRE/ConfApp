@@ -39,16 +39,16 @@ export class UsersListComponent implements OnInit {
   ) {
     this.filter = new FormControl('');
     this.onRefresh();
-    this.filter$ = this.filter.valueChanges.pipe(startWith(''));
-    this.usersFiltered$ = combineLatest([this.users$, this.filter$]).pipe(
-      map(([users, filterString]) =>
-        users.filter(
-          user =>
-            user.firstName.toLowerCase().indexOf(filterString.toLowerCase()) !==
-            -1
-        )
-      )
-    );
+    // this.filter$ = this.filter.valueChanges.pipe(startWith(''));
+    // this.usersFiltered$ = combineLatest([this.users$, this.filter$]).pipe(
+    //   map(([users, filterString]) =>
+    //     users.filter(
+    //       user =>
+    //         user.firstName.toLowerCase().indexOf(filterString.toLowerCase()) !==
+    //         -1
+    //     )
+    //   )
+    // );
   }
 
   ngOnInit() {}
@@ -60,6 +60,16 @@ export class UsersListComponent implements OnInit {
         console.error(err);
         return throwError(this.handleError(err, caught));
       })
+    );
+    this.filter$ = this.filter.valueChanges.pipe(startWith(''));
+    this.usersFiltered$ = combineLatest([this.users$, this.filter$]).pipe(
+      map(([users, filterString]) =>
+        users.filter(
+          user =>
+            user.firstName.toLowerCase().indexOf(filterString.toLowerCase()) !==
+            -1
+        )
+      )
     );
   }
 
